@@ -1,23 +1,16 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { render } from 'react-dom'
 import './index.css';
 import App from './App';
-import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'react-router-redux';
-import configureStore from './store';
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
+import rootReducer from './reducers'
 
-const store = configureStore();
-const rootElement = document.getElementById('root');
+const store = createStore(rootReducer)
 
-function render (Component) {
-  ReactDOM.render(
-    <Provider store={store}>
-      <ConnectedRouter>
-        <div>
-          <App />
-        </div>
-      </ConnectedRouter>
-    </Provider>,
-    rootElement
-  );
-}
+render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
+)

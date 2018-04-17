@@ -3,11 +3,11 @@ import React, { Component } from 'react';
 class App extends Component {
   render() {
     return (
-      <div>
-          <ul className="list">
-            <li><a href="" className="link-color">View All</a></li>
-            <li><a href="" className="link-color">Active</a></li>
-            <li><a href="" className="link-color">Completed</a></li>
+      <div className="menu">
+      <ul className="task-filters">
+          <li><a href="/">View All</a></li>
+          <li><a href="/?filter=active">Active</a></li>
+          <li><a href="/?filter=completed">Completed</a></li>
           </ul>
       </div>
     );
