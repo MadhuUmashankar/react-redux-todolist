@@ -9,6 +9,7 @@ const TextBox =({dispatch, inputValue, onInputChange, onEnter})=> {
         <input id="box1"
         className="task-form__input"
         type="text"
+        value={inputValue}
         onChange ={(event)=>{onInputChange(event)}}
         onKeyPress={(event)=>{onEnter(event)}}
         placeholder="What do you want to do today?"

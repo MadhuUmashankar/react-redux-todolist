@@ -15,3 +15,11 @@
 .App-intro {
   font-size: large;
 }
+
+.check-true {
+  background-color: green;
+}
+
+.line-through {
+  text-decoration: line-through;
+}
