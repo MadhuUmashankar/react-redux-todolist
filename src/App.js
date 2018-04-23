@@ -14,7 +14,9 @@ class App extends Component {
     this.state = {
       inputValue:'',
       items:[],
-      editedValue:false
+      editedValue:false,
+      currentIndex:'',
+      line:''
     }
   }
 
@@ -35,71 +37,96 @@ class App extends Component {
       }
     }
 
+handleEdit = (event) => {
+  const items = [...this.state.items] ;
+  items[this.state.currentIndex] = event.target.value
+  this.setState({
+    items
+  })
+}
+
+edittingValue= (event) => {
+  if(event.nativeEvent.keyCode === 13){
+    const items = [...this.state.items] ;
+    items[this.state.currentIndex] = event.target.value
+    this.setState({
+      items,
+      editedValue : false
+    })
+  }
+}
+
+
+
+
 
 
   render() {
 
-    const listValues= this.state.items;
-    const edit = !this.state.editedValue;
-    let dataValue= '';
-    let line = '';
+    let lineValue = '';
+    let classValue = '';
 
-  const handleCheckMarkChange=(indexCheck, event) => {
-    const checkedValue = event.target.checked;
-    // const checkVal = !this.state.checkedIndexValue;
-    // this.setState({checkedIndexValue:checkVal})
-    const newValue = listValues.map((data, index) =>{
-      if(indexCheck === index) {
-      line = checkedValue ? 'line-through' : '';
+    const handleCheckMarkChange=(indexCheck, event) => {
+      const checkedValue = event.target.checked;
+       lineValue = checkedValue ? 'line-strike' : '';
+       this.setState({line:lineValue})
+
+      }
+
+    const handleEditChange=(indexEdit)=>{
+      this.setState({editedValue:true, currentIndex: indexEdit})
     }
-    });
-    this.setState({ listValues: newValue });
-    console.log('checkedValue, index', checkedValue, indexCheck);
 
-}
+    const handleDelete = (indexDelete)=> {
+      const items = [...this.state.items];
+      items.splice(indexDelete, 1);
+      this.setState({ items});
+    }
 
-const handleEditChange=(indexEdit)=>{
+    const handleClear=()=>{
+      this.setState({editedValue:false});
+    }
 
-  this.setState({editedValue:edit})
-  dataValue = listValues.map((data, index) =>{
-    if(indexEdit === index) {
-      edit ? <input type="text" /> : {data}
-  }
-  });
-  this.setState({ listValues: dataValue });
+    const {currentIndex, editedValue, line, items} = this.state;
 
-  console.log('Hello', indexEdit, edit)
-}
+    var listOfItems = items.map((data, index) => {
 
+            return  <div key={index}>
+                <div className="task-item" tabIndex="0"  >
 
-    var listOfItems = listValues.map((data, index) => {
-      console.log('line', line);
-            return  <div>
-                <div className="task-item" tabIndex="0">
+                    <div className="cell">
+                    {
+                      editedValue && (currentIndex === index) ?
+                       <input type = "text" value={data} onChange={(event)=>{this.handleEdit(event)}} onKeyUp={(event)=>{this.edittingValue(event)}}/>
+                       : <div className={`task-item__title ${line}`} tabIndex="0">
+                       <input type="checkbox" onClick={(event)=>{handleCheckMarkChange(index, event)}} />
+                         <label>{data}</label>
+                      </div>
 
-                  <div className="cell">
-                  <input type="checkbox" onClick={(event)=>{handleCheckMarkChange(index, event)}} />
+                    }
 
-                  </div>
-
-                  <div className="cell">
-                    <div className={`task-item__title ${line}`} tabIndex="0">
-                       {dataValue}
                     </div>
-                  </div>
 
-                  <div className="cell margin">
-                    <img id = "editID" src={editIcon} alt="edit-icon" className="task-item__button" onClick={()=>{handleEditChange(index)}}/>
-                    <img id = "clearID" src={clear} alt="clear" className="task-item__button clear" />
-                    <img id = "deleteID" src={trash} alt="delete-icon" className="task-item__button" />
-                  </div>
+                    <div className="cell">
+                    {editedValue && (currentIndex === index) ?
+                    <div>
+                    <span onClick={(event)=>{ handleClear(event)}}><i class="material-icons">done</i></span>
+                    <span onClick={(event)=>{ handleClear(event)}}><i class="material-icons">clear</i></span> </div>
+                    :
+                    <div>
+                    <span  onClick={()=>{ handleEditChange(index)} }>
+                    <i class="material-icons">mode_edit</i></span>
+
+                    <span onClick={()=>{ handleDelete(index)} }><i class="material-icons">delete</i></span>
+                    </div>
+                  }
+                    </div>
 
                 </div>
-</div>
-
-
+              </div>
 
     })
+
     return (
       <div className="App">
           <h1 className="App-title">React Redux TODO</h1>

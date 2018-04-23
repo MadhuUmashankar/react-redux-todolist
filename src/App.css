@@ -1,10 +1,10 @@
 
 
 .App {
-  background-color: #222;
+  /* background-color: #222; */
   height: 572px;
   padding: 20px;
-  color: white;
+  color: #222;
   text-align: center;
 }
 
@@ -16,10 +16,10 @@
   font-size: large;
 }
 
-.check-true {
-  background-color: green;
+.line-strike {
+  text-decoration: line-through;
 }
 
-.line-through {
-  text-decoration: line-through;
+.hide {
+  display:none;
 }
