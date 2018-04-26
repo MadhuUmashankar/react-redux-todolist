@@ -3,10 +3,8 @@ import './App.css';
 import TextBox from './TextBox.js'
 import Tab from './Tab.js'
 import { connect } from 'react-redux'
-import { addItem } from './actions/index.js'
-import editIcon from './edit-icon.svg'
-import clear from './clear-icon.svg'
-import trash from './trashIcon.svg'
+// import {bindActionCreators } from 'redux'
+// import { addTask } from './actions/index.js'
 
 class App extends Component {
   constructor(props){
@@ -31,9 +29,9 @@ class App extends Component {
      const inputValue = this.state.inputValue.trim();
 
       if(inputValue.length && event.nativeEvent.keyCode === 13){
-        // event.preventDefault();
         items.push(inputValue);
         this.setState({items, inputValue:''})
+        // this.props.addTask(inputValue);
       }
     }
 
@@ -57,14 +55,9 @@ edittingValue= (event) => {
 }
 
 
-
-
-
-
   render() {
 
     let lineValue = '';
-    let classValue = '';
 
     const handleCheckMarkChange=(indexCheck, event) => {
       const checkedValue = event.target.checked;
@@ -92,12 +85,12 @@ edittingValue= (event) => {
     var listOfItems = items.map((data, index) => {
 
             return  <div key={index}>
-                <div className="task-item" tabIndex="0"  >
+                <div id="task-item" className="task-item" tabIndex="0"  >
 
                     <div className="cell">
                     {
                       editedValue && (currentIndex === index) ?
-                       <input type = "text" value={data} onChange={(event)=>{this.handleEdit(event)}} onKeyUp={(event)=>{this.edittingValue(event)}}/>
+                       <input type="text" className="text-item" autoComplete="off" autoFocus value={data} onChange={(event)=>{this.handleEdit(event)}} onKeyUp={(event)=>{this.edittingValue(event)}}/>
                        : <div className={`task-item__title ${line}`} tabIndex="0">
                        <input type="checkbox" onClick={(event)=>{handleCheckMarkChange(index, event)}} />
                          <label>{data}</label>
@@ -107,17 +100,17 @@ edittingValue= (event) => {
 
                     </div>
 
-                    <div className="cell">
+                    <div className="cell icon-edit">
                     {editedValue && (currentIndex === index) ?
                     <div>
-                    <span onClick={(event)=>{ handleClear(event)}}><i class="material-icons">done</i></span>
-                    <span onClick={(event)=>{ handleClear(event)}}><i class="material-icons">clear</i></span> </div>
+                    <span onClick={(event)=>{ handleClear(event)}}><i className="material-icons">done</i></span>
+                    <span onClick={(event)=>{ handleClear(event)}}><i className="material-icons">clear</i></span> </div>
                     :
                     <div>
                     <span  onClick={()=>{ handleEditChange(index)} }>
-                    <i class="material-icons">mode_edit</i></span>
+                    <i className="material-icons">mode_edit</i></span>
 
-                    <span onClick={()=>{ handleDelete(index)} }><i class="material-icons">delete</i></span>
+                    <span onClick={()=>{ handleDelete(index)} }><i className="material-icons">delete</i></span>
                     </div>
                   }
                     </div>
@@ -143,7 +136,11 @@ edittingValue= (event) => {
 
 export default connect(mapStateToProps)(App);
 
+// function mapDispatchToProps(dispatch) {
+//   return bindActionCreators({addTask}, dispatch)
+// }
+
 function mapStateToProps(state){
 return
-    inputValue: state.items
+    items: state.items
 }

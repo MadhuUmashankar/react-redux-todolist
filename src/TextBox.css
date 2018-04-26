@@ -62,51 +62,32 @@
 }
 
  .task-item {
-    display: -ms-flexbox;
+    /* display: -ms-flexbox;
     display: flex;
     outline: none;
     border-bottom: 1px dotted #666;
     height: 60px;
     overflow: hidden;
     font-size: 1.125rem;
-    font-weight: 300;
-}
+    font-weight: 300; */
 
-.cell:first-child {
-    padding-right: 20px;
-}
-
-.cell:first-child, .cell:last-child {
-    display: -ms-flexbox;
+    height: 60px;
+    border-bottom: 1px dotted #666;
+    display: -webkit-flex;
+    -webkit-justify-content: space-around; /* Safari 6.1+ */
     display: flex;
-    -ms-flex: 0 0 auto;
-    flex: 0 0 auto;
-    -ms-flex-align: center;
-    align-items: center;
+    justify-content: space-around;
 }
+
+
+/* .cell:first-child {
+    padding-right: 20px;
+} */
 
 .task-item__title {
       line-height: 60px;
     -o-text-overflow: ellipsis;
 
-}
-
-.margin{
-  margin-left: 65%;
-}
-.hide {
-    display: none!important;
-}
-
-.task-item__button:active {
-    background: #262626;
-}
-
-.task-item__button:hover {
-    color: #999;
-}
-.task-item__button:first-child {
-    margin: 0;
 }
 
 .task-list {

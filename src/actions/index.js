@@ -1,7 +1,16 @@
-let nextAddItemId = 0;
+const addTask=(task)=>{
+    return{
+    type:'ADD_TASK',
+    payload:task
+  };
+},
 
-export const addItem =text=>({
-  type:'ADD_ITEM',
-  id: nextAddItemId++,
-  text
-})
+deleteTask=(taskId)=>{
+    return {
+      type:'DELETE_TASK',
+    payload:taskId
+  };
+};
+
+
+export default {addTask, deleteTask};
